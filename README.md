@@ -14,8 +14,8 @@ Backend: Node.js (express.js)
 Tutorial:
 - clone project on your PC
 - open project with IDE
-- open terminal inside Backend directory, and execute 'npm run start'
-- open terminal inside Frontend directory, and execute 'npm run'
-- browser should be opened automatically and SPA is ready to inspect
+- open terminal inside Backend directory, and execute 'node app.js'
+- open terminal inside Frontend directory, and execute 'npm install' after npm is installed into the frontend excecute "npm start"
+- browser should then be opened automatically and SPA is ready to inspect
 
 
