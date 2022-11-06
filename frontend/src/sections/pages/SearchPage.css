@@ -1,0 +1,14 @@
+
+
+.search-card{
+    width: 100%;
+    text-align: center;
+    position: relative;
+}
+
+
+
+.form-control{
+    display: flex;
+    justify-content: center;
+}
