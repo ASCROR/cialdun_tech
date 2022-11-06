@@ -7,9 +7,11 @@ import './Form.css';
 import ResultItem from "./ResultItem";
 import PreviousItem from "./PreviousItem";
 
+const validRegex = new RegExp('^[^`~!@#$%^&*()_+={}\\[\\]|\\\\:;“’<,>.?๐฿]*$');
 
 const Form = () => {
 
+    let lastQuery;
     const {sendRequest} = useHttpClient();
     const [isLoadedTerms, setIsLoadedTerms] = useState(false)
     const [displayTerms, setDisplayTerms] = useState([]);
@@ -18,15 +20,25 @@ const Form = () => {
     const [historyValid, setHistoryValid] = useState(true);
     const [goHistory, setGoHistory] = useState(0);
     const [previousSearch, setPreviousSearch] = useState(false)
-    let lastQuery;
+    const [valid, setValid] = useState(true);
+
+    //Filter symobls from query
+    const validate = (string) => {
+        if(!validRegex.test(string)){
+            setValid(false);
+        }else{
+            setValid(true);
+        }
+    }
+
 
     const changeHandler = event => {
-        setQuery(event.target.value);
+            setQuery(event.target.value);
+        validate(query);
     }
 
     const submitHandler = event => {
         event.preventDefault();
-        console.log(query.trim().length)
         fetchResult().then();
 
         const isFound = history.some(element => {
@@ -35,7 +47,7 @@ const Form = () => {
             }
                 return false;
         })
-        if(!isFound && query.trim().length > 0) {
+        if(!isFound && query.trim().length > 0 && valid) {
             setHistory(current => [...current, query]);
             setHistoryValid(true);
             setPreviousSearch(true);
@@ -44,7 +56,7 @@ const Form = () => {
 
     const fetchResult = useCallback(async (loadedTerms) => {
 
-            if(query && query !== lastQuery && query.trim().length > 0) {
+            if(query && query !== lastQuery && query.trim().length > 0 && valid) {
                 try {
 
                     const responseData = await sendRequest(`${process.env.REACT_APP_BACKEND_URL}/${query}`);
@@ -76,6 +88,7 @@ const Form = () => {
     useEffect( () => {
             fetchResult().then();
     },[goHistory])
+
 
 
     return (
