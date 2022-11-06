@@ -2,6 +2,7 @@
 Technical assigment
 
 Description:
+
 Very simple SPA running on two local servers (localhost:3000, localhost:5000) with functional
 DuckDuckGO search API displaying Related Topics for given query.
 Query is submit inside the form on the frontend which the awaits a response from the backend.
